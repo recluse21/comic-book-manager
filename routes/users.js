@@ -67,4 +67,54 @@ router.post('/register', function(req, res, next) {
 
 });
 
+
+// user login
+router.post('/login', function(req, res, next) {
+    var email = req.body.email;
+    var password = req.body.password;
+
+    // validation
+    req.checkBody('email', 'Email is required').notEmpty();
+    req.checkBody('email', 'Email is not valid').isEmail();
+    req.checkBody('password', 'Password is required').notEmpty();
+
+    var errors = req.validationErrors();
+
+    if(errors) {
+        res.render('users/login'), {
+            errors: errors
+        }
+    } else {
+        
+        firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(function(authData) {
+            console.log('Login successful');
+            req.flash('success_msg', 'You are now logged in');
+            res.redirect('/comics');
+        })
+        .catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            var flashMsg = "Login failed";
+ 
+            if (errorCode === 'auth/wrong-password') {
+                console.log('Wrong password.');
+                flashMsg = 'Incorrect Password';
+
+            } else {
+                console.log('Login unsuccessful: ', errorMessage);
+            
+            }
+                console.log('Login failed: ', error);
+
+            req.flash('error_msg', flashMsg);
+            res.redirect('/users/login');
+
+        });
+
+    } // end else
+
+});
+
 module.exports = router;

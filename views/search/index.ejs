@@ -1,3 +1,25 @@
 <% include ../partials/header %>
-
+    <% if (success_msg != false) { %>
+    <div class="alert alert-success">
+    <%= success_msg %>
+    </div>
+<% } %>
+<% if (error_msg != false) { %>
+    <div class="alert alert-danger">
+    <%= error_msg %>
+    </div>
+<% } %>
+    <h1>Comic Search</h1>
+    <p>Search for comics to add to your collection.</p>
+    <form method="post" action="/users/login">
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" class="form-control" name="title" placeholder="Comic Title">
+        </div>
+        <div class="form-group">
+            <label>Issue Number</label>
+            <input type="text" class="form-control" name="issue" placeholder="issue">
+        </div>
+        <button type="submit" class="btn btn-default">Search</button>
+    </form>
 <% include ../partials/footer %>
