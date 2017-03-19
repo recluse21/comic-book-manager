@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comic Book Manager</title>
+    <link rel="stylesheet" href="http://bootswatch.com/superhero/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Comic Book Manager</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse navbar-right">
+          <ul class="nav navbar-nav">
+
+            <li><a href="/users/register">Register</a></li>
+            <li><a href="/users/login">Login</a></li>
+ 
+            <!--<li><a href="/users/logout">Logout</a></li>-->
+
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+ 
+        <div class="row">
+          <div class="col-md-12">
+
+            
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+
+          </div>
+        </div>
+     
+        <div class="row"><!-- ./partials/header -->
+            <div class="col-md-3">
+
+             <!-- <p class="well well-sm">Welcome, </p> -->
+
+                <div class="list-group table-of-contents">
+                    <a class="list-group-item" href="/comics">View Your Comics</a>
+                    <a class="list-group-item" href="/search">Search</a>
+                </div>         
+            </div>
+            <div class="col-md-9">
+              <% if (success_msg != false) { %>
+                  <div class="alert alert-success">
+              <% } %>    
+                  </div>
+              <% if (success_msg != false) { %>
+                  <div class="alert alert-danger">
+              <% } %>
+                  </div>
+
+            
+
+            

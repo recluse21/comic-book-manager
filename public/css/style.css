@@ -1,0 +1,19 @@
+.comics img, .comic img{
+    width:100%;
+    border: 2px #fff solid;
+}
+
+.comics img:hover{
+    opacity:0.7;
+    cursor:pointer;
+}
+
+.comics h4 {
+    margin-bottom: 0;
+}
+
+footer {
+    margin-top: 40px;
+    border-top:#333 solid 1px;
+    padding-top:20px;
+}
