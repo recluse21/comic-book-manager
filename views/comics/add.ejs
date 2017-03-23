@@ -1,0 +1,35 @@
+<% include ../partials/header %>
+    <h1>Add Comic</h1>
+    <form method="post" action="/comics/add">
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" class="form-control" name="title" placeholder="Title">
+        </div>
+        <div class="form-group">
+            <label>Issue Number</label>
+            <input type="text" class="form-control" name="issueNum" placeholder="Issue Number">
+        </div>
+        <div class="form-group">
+            <label>Writer</label>
+            <input type="text" class="form-control" name="writer" placeholder="Writer">
+        </div>
+        <div class="form-group">
+            <label>Artist</label>
+            <input type="text" class="form-control" name="artist" placeholder="Artist">
+        </div>
+        <div class="form-group">
+            <label>Release Year</label>
+            <input type="text" class="form-control" name="year">
+        </div>
+        <div class="form-group">
+            <label>Info</label>
+            <textarea class="form-control" name="info" placeholder="Info"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Cover URL</label>
+            <input type="text" class="form-control" name="cover">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+        <a class="btn btn-danger" href="/comics">Close</a>
+    </form>
+<% include ../partials/footer %>

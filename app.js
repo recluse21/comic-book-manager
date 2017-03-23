@@ -107,10 +107,3 @@ app.set('port', (process.env.PORT || 3000));
 app.listen(app.get('port'), function(){
     console.log('Server started on port: '+ app.get('port'));
 });
-
-var ts = new Date();
-console.log(`time stamp: ${ts}`);
-var data = `${ts}${configData.privateApi}${configData.marvelApiKey}`;
-
-var hash = crypto.createHash('md5').update(data).digest("hex");
-console.log(`New hash: ${hash}`);

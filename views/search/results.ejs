@@ -5,8 +5,8 @@
         <% for(var i=0; i < comics.length; i++) { %>
             <div class="col-md-4 comics">
                 <a href="/comics/details/<%=comics[i].id %>"><img src="<%= comics[i].cover %>"></a>
-                <h4 class="album-title text-center"><%= comics[i].title %></h4>
-                <p class="artist-name text-center"><%= comics[i].artist %></p>
+                <h4 class="comic-title text-center"><%= comics[i].title %></h4>
+                <p class="issue-number text-center">Issue #<%= comics[i].issue %></p>
             </div>
         <% } %>
     </div>

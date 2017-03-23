@@ -1,3 +1,18 @@
 <% include ../partials/header %>
-
+    <h1>My Comics
+        <a href="/comics/add" class="btn btn-success pull-right">Add Comic</a>
+    </h1>
+            <% var j = comics.length, group = 6, subset; %>
+            <% for (var i=0; i < j; i += group) { %>
+                <% subset = comics.slice(i, i+group); %>           
+                <div class="row comics">
+                    <% for (var x=0; x < subset.length; x++) { %> 
+                    <div class="col-md-2 comics">
+                            <a href="/comics/details/<%=subset[x].id %>"><img src="<%= subset[x].cover %>"></a>
+                            <h4 class="comic-title text-center"><%= subset[x].title %></h4>
+                            <p class="issue-num text-center">#<%= subset[x].issueNum %></p>
+                    </div>
+                    <% } %>
+                </div>
+            <% } %>
 <% include ../partials/footer %>

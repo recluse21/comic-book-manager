@@ -2,3 +2,4 @@ node_modules/
 public/images/uploads/
 serviceAccountKey.json
 configData.json
+comic_search/
