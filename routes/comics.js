@@ -64,6 +64,13 @@ router.get('/add', function(req, res, next) {
 // manually add new comic
 router.post('/add', function(req, res, next) {
 
+    var comicNotes;
+    if (req.body.notes === null) {
+        comicNotes = ' ';
+    } else {
+        comicNotes = req.body.notes;
+    }
+
     // Build comic Object
     var comic = {
         title: req.body.title,
@@ -72,6 +79,7 @@ router.post('/add', function(req, res, next) {
         artist: req.body.artist,
         info: req.body.info,
         year: req.body.year,
+        notes: comicNotes,
         cover: req.body.cover
         //uid: firebase.auth().currentUser.uid
     }
@@ -86,6 +94,37 @@ router.post('/add', function(req, res, next) {
     // display success message and reirect to albums page
     req.flash('success_msg', 'Comic Saved');
     res.redirect('/comics');
+});
+
+// get edit comic page
+router.get('/edit/:id', function(req, res, next) {
+
+    var id = req.params.id;
+    var comicEditRef = db.ref('comics');
+        
+    comicEditRef.child(id).once('value', function(snapshot) {
+    var comic = snapshot.val();
+
+    // render album edit page
+    res.render('comics/edit', {comic:comic, id:id});
+    });
+
+});
+
+// submit edited comic page
+router.post('/edit/:id', function(req, res, next) {
+
+    var id = req.params.id;
+    var comicEditRef = db.ref('comics').child(id);
+
+    // update comic
+    comicEditRef.update({
+        notes: req.body.notes
+    });
+
+    req.flash('success_msg', 'Comic Updated');
+    res.redirect('/comics/details/' + id);
+
 });
 
 // delete a comic

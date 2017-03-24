@@ -1,27 +1,33 @@
 <% include ../partials/header %>
     <a href="/comics" class="btn btn-default">Go Back</a>
     <h1><%=comic.title %> #<%=comic.issue %></h1>
-    <div class="row comic">
-        <div class="col-md-4">
-            <img src="<%= comic.cover %>">
+    <form method="post" action="/comics/edit/<%=id %>">
+        <div class="row comic">
+            <div class="col-md-4">
+                <img src="<%= comic.cover %>">
+            </div>
+            <div class="col-md-8">
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Writer:</strong> <%= comic.writer %></li>
+                    <li class="list-group-item"><strong>Artist:</strong> <%= comic.artist %></li>
+                    <li class="list-group-item"><strong>Release Year:</strong> <%= comic.year %></li>
+                </ul>
+                    <div class="form-group">
+                        <label>Notes:</label>
+                        <textarea class="form-control" name="notes" ><%= comic.notes %></textarea>
+                    </div>
+            </div>
         </div>
-        <div class="col-md-8">
-            <ul class="list-group">
-                <li class="list-group-item"><strong>Writer:</strong> <%= comic.writer %></li>
-                <li class="list-group-item"><strong>Artist:</strong> <%= comic.artist %></li>
-                <li class="list-group-item"><strong>Release Year:</strong> <%= comic.year %></li>
-            </ul>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Details:</h4>
+                <p><%= comic.info %></p>
+            </div>
         </div>
-    </div>
-<hr />
-    <div class="row">
-        <div class="col-md-12">
-            <h4>Details:</h4>
-            <p><%= comic.info %></p>
-        </div>
-    </div>
-<br />
-    <hr />
-    <a href="/comics/edit/<%= id %>" class="btn btn-default">Edit</a>
-    <a href="#" data-id="<%= id %>" class="delete-comic btn btn-danger">Delete</a>
+        <br />
+        <hr />
+        <button type="submit" class="btn btn-default">Submit</button>
+        <a class="btn btn-danger" href="/albums">Close</a>
+    </form>
 <% include ../partials/footer %>    
