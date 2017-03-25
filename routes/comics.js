@@ -7,6 +7,20 @@ var upload = multer({dest:'./public/images/uploads'});
 
 var db = admin.database();
 
+router.get('*', function(req, res, next) {
+    // check authentication
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in.
+            console.log('User is signed in');
+            next();
+        } else {
+            console.log('User is not signed in');
+            res.redirect('/users/login');
+        }
+    });
+});
+
 router.get('/', function(req, res, next) {
 
     // get comic info from database
@@ -19,7 +33,7 @@ router.get('/', function(req, res, next) {
             var key = childSnapshot.key; // gets the unique key for each item
 
             var childData = childSnapshot.val();
-            //if(childData.uid == firebase.auth().currentUser.uid) {
+            if(childData.uid == firebase.auth().currentUser.uid) {
                 comics.push({
                     id: key,
                     artist: childData.artist,
@@ -30,7 +44,7 @@ router.get('/', function(req, res, next) {
                     issueNum: childData.issue,
                     date: childData.year
                 });
-            //}
+            }
         });
         // send comic info to form
         res.render('comics/index', {comics: comics});
@@ -80,8 +94,8 @@ router.post('/add', function(req, res, next) {
         info: req.body.info,
         year: req.body.year,
         notes: comicNotes,
-        cover: req.body.cover
-        //uid: firebase.auth().currentUser.uid
+        cover: req.body.cover,
+        uid: firebase.auth().currentUser.uid
     }
 
     // Create Reference 

@@ -117,4 +117,17 @@ router.post('/login', function(req, res, next) {
 
 });
 
+// Logout user
+router.get('/logout', function(req, res){
+    // unauthenticate the client
+    firebase.auth().signOut().then(function() {
+        console.log('You have logged out');
+        req.flash('success_msg', 'You are logged out');
+        res.redirect('/users/login');
+    }).catch(function(error) {
+        console.log('An error occurred while logging out');
+    });
+});
+
+
 module.exports = router;
