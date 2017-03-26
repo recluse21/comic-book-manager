@@ -1,14 +1,20 @@
-<% include ../partials/header %>
+<% include ../partials/head %>
     <h1>Search Results</h1>
-
-    <div class="row comics">
-        <% for(var i=0; i < comics.length; i++) { %>
-            <div class="col-md-4 comics">
-                <a href="/comics/details/<%=comics[i].id %>"><img src="<%= comics[i].cover %>"></a>
-                <h4 class="comic-title text-center"><%= comics[i].title %></h4>
-                <p class="issue-number text-center">Issue #<%= comics[i].issue %></p>
+            <% var j = comics.data.results.length, group = 6, subset; %>
+            <% for (var i=0; i < j; i += group) { %>
+                <% subset = comics.data.results.slice(i, i+group); %>           
+                <div class="row comics">
+                    <% for (var x=0; x < subset.length; x++) { %> 
+                    <div class="col-md-2 comics text-center">
+                            <a href="#"><img src="<%= subset[x].thumbnail.path %>.<%= subset[x].thumbnail.extension %>"></a>
+                            <%= subset[x].title %>
+                            <!--<h4 class="comic-title text-center"><%= subset[x].title %></h4>-->
+                            <!--<p class="issue-num text-center">#<%= subset[x].issueNum %></p>-->
+                    </div>
+                    <% } %>
+                </div>
+            <% } %>
+            <div class="row comics attribution">
+                <p class="text-center"><%= comics.attributionText %></p>
             </div>
-        <% } %>
-    </div>
-
 <% include ../partials/footer %>

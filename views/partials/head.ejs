@@ -48,9 +48,7 @@
      
         <div class="row"><!-- ./partials/header -->
             <div class="col-md-3">
-              <% if(authdata != null) { %>
-                <p class="well well-sm">Welcome, <%= user.first_name %> <%= user.last_name %> </p>
-              <% } %>
+                <p class="well well-sm">Search Parameters<br/>Title: <%= title %><br />Issue #: <%= issue %></p>
                 <div class="list-group table-of-contents">
                     <a class="list-group-item" href="/comics">View Your Comics</a>
                     <a class="list-group-item" href="/search">Search</a>

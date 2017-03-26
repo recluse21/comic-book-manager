@@ -10,14 +10,10 @@ var db = admin.database();
 router.get('*', function(req, res, next) {
     // check authentication
     firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            // User is signed in.
-            console.log('User is signed in');
-            next();
-        } else {
-            console.log('User is not signed in');
+        if (!user) {
             res.redirect('/users/login');
-        }
+         } 
+        next();
     });
 });
 
@@ -33,7 +29,8 @@ router.get('/', function(req, res, next) {
             var key = childSnapshot.key; // gets the unique key for each item
 
             var childData = childSnapshot.val();
-            if(childData.uid == firebase.auth().currentUser.uid) {
+            
+            if(firebase.auth().currentUser !== null && childData.uid == firebase.auth().currentUser.uid) {
                 comics.push({
                     id: key,
                     artist: childData.artist,
@@ -44,7 +41,7 @@ router.get('/', function(req, res, next) {
                     issueNum: childData.issue,
                     date: childData.year
                 });
-            }
+            }         
         });
         // send comic info to form
         res.render('comics/index', {comics: comics});
