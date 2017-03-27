@@ -21,3 +21,11 @@ footer {
 .attribution {
     margin-top: 4em;
 }
+
+label {
+    font-size: 13px;
+}
+
+#resultsForm .form-group {
+    display: none;
+}
