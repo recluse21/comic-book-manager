@@ -5,7 +5,6 @@ var crypto = require('crypto');
 var request = require('request');
 var firebase = require('firebase');
 var admin = require("firebase-admin");
-var comicSearch = require('../comic_search/comic_search.js');
 
 var db = admin.database();
 
@@ -64,7 +63,7 @@ router.post('/results', function(req, res, next) {
                 
                  res.render('search/results', {comics: body, title: title, issue: issue});
             }
-            //res.render('search/results', {info: info});
+
         });
                 
     }
@@ -77,5 +76,5 @@ router.post('/results', function(req, res, next) {
 
 
 
-//module.exports.getComics = getComics;
+
 module.exports = router;
