@@ -140,7 +140,7 @@ router.post('/edit/:id', function(req, res, next) {
 
 // delete a comic
 router.delete('/delete/:id', function(req, res, next) {
-    console.log(`router.delete '/delete/:id', genres.js`);
+
     var id = req.params.id;
 
     var comicEditRef = db.ref('comics').child(id);
