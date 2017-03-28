@@ -1,66 +1,45 @@
 <% include ../partials/head %>
     <h1>Search Results</h1>
+    <p >Click on a comic to add it to your collection.</p>
         <% if(comics.data.count > 0) { %>
             <% var j = comics.data.results.length, group = 6, subset; %>
             <% for (var i=0; i < j; i += group) { %>
-                <% subset = comics.data.results.slice(i, i+group); %>     
-                <% console.log('result set: ' + i); %>      
-                <div class="row comics">
+                <% subset = comics.data.results.slice(i, i+group); %>          
+                <div class="row comics search-results">
                     <% for (var x=0; x < subset.length; x++) { %> 
-                        <form method="post" action="/search/add" id="resultsForm">
-                            <div class="form-group">
-                                <label>Title</label>
-                                <input type="hidden" class="form-control" name="title" value="<%= subset[x].title %>">
-                            </div>
-                            <div class="form-group">
-                                <label>Issue Number</label>
-                                <input type="hidden" class="form-control" name="issueNum" value="<%= subset[x].issueNumber %>">
-                            </div>
+                        <form method="post" action="/search/add" name="<%= i %>-cb<%= x+1 %>">
+                            <input type="hidden" class="form-control" name="title" value="<%= subset[x].title %>">                              
+                            <input type="hidden" class="form-control" name="issue" value="<%= subset[x].issueNumber %>">
                             <% if(subset[x].creators.available > 0) { %>
-                                <div class="form-group">  
-                                    <% for(var q=0; q < subset[x].creators.available; q++) { %>
-                                        <% var creator = subset[x].creators.items[q].role;  %>
-                                        <% if (creator === 'writer'){ %>
-                                            <input type="hidden" class="form-control" name="writer" value="<%= subset[x].creators.items[q].name %>">
-                                        <% } %>
+                                <% for(var q=0; q < subset[x].creators.available; q++) { %>
+                                    <% var creator = subset[x].creators.items[q].role;  %>
+                                    <% if (creator === 'writer'){ %>
+                                        <input type="hidden" class="form-control" name="writer" value="<%= subset[x].creators.items[q].name %>">
                                     <% } %>
-                                </div>
-                                <div class="form-group">
-                                    <% for(var q=0; q < subset[x].creators.available; q++) { %>
-                                        <% if ((subset[x].creators.items[q].role).includes('penciller')){ %>
-                                            <input type="hidden" class="form-control" name="artist" value="<%= subset[x].creators.items[q].name %>">
-                                        <% } %>
+                                <% } %>
+                                <% for(var q=0; q < subset[x].creators.available; q++) { %>
+                                    <% if ((subset[x].creators.items[q].role).includes('penciller')){ %>
+                                        <input type="hidden" class="form-control" name="artist" value="<%= subset[x].creators.items[q].name %>">
                                     <% } %>
-                                </div>
+                                <% } %>
                             <% } else { %>
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control" name="writer" value=" ">
-                                </div>
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control" name="artist" value=" ">
-                                </div>
+                                <input type="hidden" class="form-control" name="writer" value=" ">
+                                <input type="hidden" class="form-control" name="artist" value=" ">
                             <% } %>
-                            <div class="form-group">
-                                <% var saleDate = subset[x].dates[0].date;  %>
-                                <% var saleYear = saleDate.slice(0,4);  %>
-                                <input type="hidden" class="form-control" name="year" value="<%= saleYear  %>">
-                            </div>
-                            <div class="form-group">
-                                <label>Story Details</label>
-                                <textarea class="form-control" name="info"><%= subset[x].description  %></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Notes</label>
-                                <textarea class="form-control" name="notes"> </textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Cover URL</label>
-                                <input type="hidden" class="form-control" name="cover" value="<%= subset[x].thumbnail.path %>.<%= subset[x].thumbnail.extension %>">
-                            </div>
+
+                            <% var saleDate = subset[x].dates[0].date;  %>
+                            <% var saleYear = saleDate.slice(0,4);  %>
+                            <input type="hidden" class="form-control" name="year" value="<%= saleYear  %>">
+                            <textarea class="form-control" name="info"><%= subset[x].description  %></textarea>
+                            <textarea class="form-control" name="notes"> </textarea>
+                            <input type="hidden" class="form-control" name="cover" value="<%= subset[x].thumbnail.path %>.<%= subset[x].thumbnail.extension %>">
+
                             <div class="col-md-2 comics text-center">
-                                <a href="#<%= x %>"><img src="<%= subset[x].thumbnail.path %>.<%= subset[x].thumbnail.extension %>"></a>
-                                <p class="text-center"><%= subset[x].title %></p>
-                                <button type="submit" class="btn btn-default btn-xs results add-comic">Add</button>
+                                <a href="#" data-id="<%= i %>-cb<%= x+1 %>" class="searchResult">
+                                    <img src="<%= subset[x].thumbnail.path %>.<%= subset[x].thumbnail.extension %>" >
+                                </a>
+                                <p class="text-center"><%- subset[x].title %></p>
+                                <!--<a href="#" class="btn btn-default btn-xs results add-comic" data-id="<%= i %>-cb<%= x+1 %>">Add</a>-->
                             </div>
                         </form>
                     <% } %>

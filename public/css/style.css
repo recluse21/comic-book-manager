@@ -26,10 +26,19 @@ label {
     font-size: 13px;
 }
 
-#resultsForm .form-group {
+#resultsForm .form-group, .search-results form input, .search-results form textarea {
     display: none;
 }
 
-.results {
+.search-results {
     margin-bottom:2em;
+}
+
+.comic-added {
+    background-color:#5cb85c;
+    cursor:not-allowed !important;
+}
+
+.comic-added img {
+    cursor:not-allowed !important;
 }

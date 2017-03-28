@@ -80,7 +80,7 @@ router.post('/add', function(req, res, next) {
     // Build comic Object
     var comic = {
         title: req.body.title,
-        issue: req.body.issueNum,
+        issue: req.body.issue,
         writer: req.body.writer,
         artist: req.body.artist,
         info: req.body.info,
