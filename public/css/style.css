@@ -29,3 +29,7 @@ label {
 #resultsForm .form-group {
     display: none;
 }
+
+.results {
+    margin-bottom:2em;
+}

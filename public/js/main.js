@@ -9,7 +9,7 @@ $(document).ready(function() {
                 type:'DELETE',
                 success: function(result) {
                     console.log('Deleting comic...');
-                    window.location.href='/comics';
+                    //window.location.href='/comics';
                 },
                 error: function(err){
                     console.log('Delete failed');
@@ -18,5 +18,27 @@ $(document).ready(function() {
             });
         }
     });
+
+    // add a comic to user collection
+    $('.add-comic').click(function() {
+        $.ajax({
+            url: send_email.php,
+            type:'POST',
+            data:
+            {
+                email: email_address,
+                message: message
+            },
+            success: function(result) {
+                console.log('Adding comic...');
+                
+            },
+            error: function(err) {
+                console.log('Add failed...');
+                console.log(err);
+            }               
+        });
+    });
+
 });
 
