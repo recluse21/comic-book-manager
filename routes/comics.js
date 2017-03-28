@@ -130,7 +130,10 @@ router.post('/edit/:id', function(req, res, next) {
 
     // update comic
     comicEditRef.update({
-        notes: req.body.notes
+        writer: req.body.writer,
+        artist: req.body.artist,
+        notes: req.body.notes,
+        info: req.body.info
     });
 
     req.flash('success_msg', 'Comic Updated');

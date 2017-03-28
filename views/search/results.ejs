@@ -8,20 +8,24 @@
                 <div class="row comics search-results">
                     <% for (var x=0; x < subset.length; x++) { %> 
                         <form method="post" action="/search/add" name="<%= i %>-cb<%= x+1 %>">
-                            <input type="hidden" class="form-control" name="title" value="<%= subset[x].title %>">                              
+                            <input type="hidden" class="form-control" name="title" value="<%= subset[x].title %>">
                             <input type="hidden" class="form-control" name="issue" value="<%= subset[x].issueNumber %>">
                             <% if(subset[x].creators.available > 0) { %>
+                                <% var comicWriter = ' '; %>
                                 <% for(var q=0; q < subset[x].creators.available; q++) { %>
-                                    <% var creator = subset[x].creators.items[q].role;  %>
+                                    <% var creator = subset[x].creators.items[q].role; %>
                                     <% if (creator === 'writer'){ %>
-                                        <input type="hidden" class="form-control" name="writer" value="<%= subset[x].creators.items[q].name %>">
+                                        <% comicWriter = subset[x].creators.items[q].name %>
                                     <% } %>
                                 <% } %>
+                                <input type="hidden" class="form-control" name="writer" value="<%= comicWriter %>">
+                                <% var comicArtist = ' '; %>
                                 <% for(var q=0; q < subset[x].creators.available; q++) { %>
-                                    <% if ((subset[x].creators.items[q].role).includes('penciller')){ %>
-                                        <input type="hidden" class="form-control" name="artist" value="<%= subset[x].creators.items[q].name %>">
+                                    <% if ((subset[x].creators.items[q].role).includes('pencil')){ %>
+                                        <% comicArtist = subset[x].creators.items[q].name %>
                                     <% } %>
                                 <% } %>
+                                <input type="hidden" class="form-control" name="artist" value="<%= comicArtist %>">
                             <% } else { %>
                                 <input type="hidden" class="form-control" name="writer" value=" ">
                                 <input type="hidden" class="form-control" name="artist" value=" ">

@@ -1,6 +1,6 @@
 <% include ../partials/header %>
     <a href="/comics" class="btn btn-default">Go Back</a>
-    <h1><%=comic.title %> #<%=comic.issue %></h1>
+    <h1><%=comic.title %></h1>
     <form method="post" action="/comics/edit/<%=id %>">
         <div class="row comic">
             <div class="col-md-4">
@@ -8,8 +8,8 @@
             </div>
             <div class="col-md-8">
                 <ul class="list-group">
-                    <li class="list-group-item"><strong>Writer:</strong> <%= comic.writer %></li>
-                    <li class="list-group-item"><strong>Artist:</strong> <%= comic.artist %></li>
+                    <li class="list-group-item"><strong>Writer: </strong><input type="text" name="writer" value="<%= comic.writer %>"> </li>
+                    <li class="list-group-item"><strong>Artist: </strong><input type="text" name="artist" value="<%= comic.artist %>"></li>
                     <li class="list-group-item"><strong>Release Year:</strong> <%= comic.year %></li>
                 </ul>
                     <div class="form-group">
@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h4>Details:</h4>
-                <p><%= comic.info %></p>
+                <textarea class="form-control" name="info" ><%= comic.info %></textarea>
             </div>
         </div>
         <br />
