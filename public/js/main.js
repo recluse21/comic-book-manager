@@ -26,8 +26,15 @@ $(document).ready(function() {
             type:'POST',
             data:
             {
-                email: email_address,
-                message: message
+                title: req.body.title,
+                issue: req.body.issueNum,
+                writer: req.body.writer,
+                artist: req.body.artist,
+                info: req.body.info,
+                year: req.body.year,
+                notes: comicNotes,
+                cover: req.body.cover,
+                uid: firebase.auth().currentUser.uid
             },
             success: function(result) {
                 console.log('Adding comic...');
