@@ -33,15 +33,7 @@ $(document).ready(function() {
         var info = $('form[name='+ id + ']' + ' [name=info]').val();
         var year = $('form[name='+ id + ']' + ' [name=year]').val();
         var cover = $('form[name='+ id + ']' + ' [name=cover]').val();
-
-        // if(writer === null) {
-        //     writer = ' ';
-        // }
-        console.log('this is the writer:', writer);
-        if(artist === null) {
-            artist = ' ';
-        }
-
+        
         $.ajax({
             url: '/search/add',
             type:'POST',

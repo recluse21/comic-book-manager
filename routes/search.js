@@ -44,9 +44,6 @@ router.post('/results', function(req, res, next) {
         var ts = new Date();
         var data = `${ts}${configData.privateApi}${configData.marvelApiKey}`;
         var hash = crypto.createHash('md5').update(data).digest("hex");
-        // console.log('&ts=', ts);
-        // console.log('&apikey=', configData.marvelApiKey);
-        // console.log('&hash=', hash);
 
         var issueNumber;
         if (req.body.issueNum != '') {
@@ -62,8 +59,6 @@ router.post('/results', function(req, res, next) {
         }, function (error, response, body) {
 
             if (!error && response.statusCode === 200) {
-                // console.log(`https://gateway.marvel.com/v1/public/comics?titleStartsWith=${title}${issueNumber}&orderBy=onsaleDate&apikey=${configData.marvelApiKey}&ts=${ts}&hash=${hash}`);
-                // console.log('Search results: ', body);
                  res.render('search/results', {comics: body, title: title, issue: issue});
             }
 
