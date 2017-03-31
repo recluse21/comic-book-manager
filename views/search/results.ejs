@@ -15,15 +15,12 @@
                             <% if(subset[x].creators.available > 0) { %>
                                 <% var comicWriter = ''; %>
                                 <% var comicArtist = ''; %>
-                                <% var writerCount=0, artistCount=0; %>
                                 <% for(var z=0; z < subset[x].creators.available; z++) { %>
                                     <% if (subset[x].creators.items[z].role === 'writer'){ %>
-                                       <% writerCount++; %>
                                        <% comicWriter += subset[x].creators.items[z].name; %>
                                        <% comicWriter += ', '; %>
                                     <% } %>
                                     <% if (subset[x].creators.items[z].role === 'artist' || (subset[x].creators.items[z].role).includes('pencil')){ %>
-                                       <% artistCount++; %>
                                        <% comicArtist += subset[x].creators.items[z].name; %>
                                        <% comicArtist += ', '; %>
                                        <% /*console.log('Artist:' + subset[x].creators.items[z].name + ', '); */%>
