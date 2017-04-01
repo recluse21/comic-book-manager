@@ -10,7 +10,7 @@ This is a Node.js comic book manager CRUD application. Users can register and lo
 
 ## Prerequisites
 * [Node.js](https://nodejs.org/en/)
-* [Firebase](www.firebase.com) account and SDK
+* [Firebase](https://firebase.google.com/) account and SDK
 * [Marvel API](https://developer.marvel.com) key
 
 ## Setup

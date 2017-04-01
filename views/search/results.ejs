@@ -23,7 +23,6 @@
                                     <% if (subset[x].creators.items[z].role === 'artist' || (subset[x].creators.items[z].role).includes('pencil')){ %>
                                        <% comicArtist += subset[x].creators.items[z].name; %>
                                        <% comicArtist += ', '; %>
-                                       <% /*console.log('Artist:' + subset[x].creators.items[z].name + ', '); */%>
                                     <% } %>
                                 <% } %>
                                 <% comicWriter = comicWriter.slice(0, comicWriter.length-2);  %>
