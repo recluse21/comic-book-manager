@@ -4,11 +4,9 @@
         <% if(comics.data.count > 0) { %>
             <% var j = comics.data.results.length, group = 6, subset; %>
             <% for (var i=0; i < j; i += group) { %>
-                <% subset = comics.data.results.slice(i, i+group); %>     
-                <% console.log('Row ' + i);%>     
+                <% subset = comics.data.results.slice(i, i+group); %>      
                 <div class="row comics search-results">
                     <% for (var x=0; x < subset.length; x++) { %> 
-                        <% console.log('comic ' + x);%>
                         <form method="post" action="/search/add" name="<%= i %>-cb<%= x+1 %>">
                             <input type="hidden" class="form-control" name="title" value="<%= subset[x].title %>">
                             <input type="hidden" class="form-control" name="issue" value="<%= subset[x].issueNumber %>">
@@ -16,7 +14,7 @@
                                 <% var comicWriter = ''; %>
                                 <% var comicArtist = ''; %>
                                 <% for(var z=0; z < subset[x].creators.available; z++) { %>
-                                    <% if (subset[x].creators.items[z].role === 'writer'){ %>
+                                    <% if ((subset[x].creators.items[z].role).includes('writer')){ %>
                                        <% comicWriter += subset[x].creators.items[z].name; %>
                                        <% comicWriter += ', '; %>
                                     <% } %>

@@ -17,13 +17,13 @@ This is a Node.js comic book manager CRUD application. Users can register and lo
 Once you have created an account on Firebase you will need to create a project for use with the comic book manager app. You will need to get your [Firebase SDK json file](https://firebase.google.com/docs/admin/setup#add_firebase_to_your_app), put it in your root folder, and name it __serviceAccountKey.json__. Create a file in the root folder called __configData.json__. This file will hold the configuration info for Firebase as well as the Marvel API keys. See format below.
 ```json
 {
-    "apiKey": "(FIREBASE API_KEY)",
-    "authDomain": "(PROJECT_ID).firebaseapp.com",
-    "databaseURL": "https://(DATABASE_NAME).firebaseio.com",
-    "storageBucket": "(BUCKET).appspot.com",
-    "serviceAccountKey": "(PATH TO YOUR FIREBASE ADMIN SDK).json",
-    "marvelApiKey": "(MARVEL PUBLIC API KEY)",
-    "privateApi": "(MARVEL PRIVATE API KEY)"
+    "apiKey": "<FIREBASE API_KEY>",
+    "authDomain": "<FIREBASE PROJECT_ID>.firebaseapp.com",
+    "databaseURL": "https://<DATABASE_NAME>.firebaseio.com",
+    "storageBucket": "<BUCKET>.appspot.com",
+    "serviceAccountKey": "<PATH TO YOUR FIREBASE ADMIN SDK>.json",
+    "marvelApiKey": "<MARVEL PUBLIC API KEY>",
+    "privateApi": "<MARVEL PRIVATE API KEY>"
 }
 ```
 ## Install
