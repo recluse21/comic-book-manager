@@ -1,158 +1,147 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 var admin = require("firebase-admin");
-var firebase = require('firebase');
-var multer = require('multer');
-var upload = multer({dest:'./public/images/uploads'});
+var firebase = require("firebase");
+var multer = require("multer");
+var upload = multer({ dest: "./public/images/uploads" });
 
 var db = admin.database();
 
-router.get('*', function(req, res, next) {
-    // check authentication
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (!user) {
-            res.redirect('/users/login');
-         } 
-        next();
-    });
+router.get("*", function(req, res, next) {
+  // check authentication
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (!user) {
+      res.redirect("/users/login");
+    }
+    next();
+  });
 });
 
-router.get('/', function(req, res, next) {
+router.get("/", function(req, res, next) {
+  // get comic info from database
+  //var userKey = firebase.auth().currentUser.uid;
+  var comicRef = db.ref("comics/").orderByChild("title");
+  comicRef.once("value").then(function(dataSnapshot) {
+    var comics = [];
+    dataSnapshot.forEach(function(childSnapshot) {
+      var key = childSnapshot.key; // gets the unique key for each item
 
-    // get comic info from database
-    //var userKey = firebase.auth().currentUser.uid;
-    var comicRef = db.ref('comics/').orderByChild('title');
-    comicRef.once('value')
-        .then(function(dataSnapshot) {
-        var comics = [];
-        dataSnapshot.forEach(function(childSnapshot) {
-            var key = childSnapshot.key; // gets the unique key for each item
+      var childData = childSnapshot.val();
 
-            var childData = childSnapshot.val();
-            
-            if(firebase.auth().currentUser !== null && childData.uid == firebase.auth().currentUser.uid) {
-                comics.push({
-                    id: key,
-                    artist: childData.artist,
-                    cover: childData.cover,
-                    info: childData.info,
-                    title: childData.title,
-                    writer: childData.writer,
-                    issueNum: childData.issue,
-                    date: childData.year
-                });
-            }         
+      if (
+        firebase.auth().currentUser !== null &&
+        childData.uid == firebase.auth().currentUser.uid
+      ) {
+        comics.push({
+          id: key,
+          artist: childData.artist,
+          cover: childData.cover,
+          info: childData.info,
+          title: childData.title,
+          writer: childData.writer,
+          issueNum: childData.issue,
+          date: childData.year
         });
-        // send comic info to form
-        res.render('comics/index', {comics: comics});
+      }
     });
-
+    // send comic info to form
+    res.render("comics/index", { comics: comics });
+  });
 });
 
 // Get comic detail info for display
-router.get('/details/:id', function(req, res) {
+router.get("/details/:id", function(req, res) {
+  var id = req.params.id;
 
-    var id = req.params.id;
+  var comicDetail = db.ref("comics");
 
-    var comicDetail = db.ref('comics');
-   
-    comicDetail.child(id).once('value', function(snapshot) {
-        var comic = snapshot.val();
+  comicDetail.child(id).once("value", function(snapshot) {
+    var comic = snapshot.val();
 
-        // render comic detail page
-        res.render('comics/details', {comic:comic, id:id});
-   });
-
+    // render comic detail page
+    res.render("comics/details", { comic: comic, id: id });
+  });
 });
 
 // display add comic page
-router.get('/add', function(req, res, next) {
-
-    res.render('comics/add');
-
+router.get("/add", function(req, res, next) {
+  res.render("comics/add");
 });
 
 // manually add new comic
-router.post('/add', function(req, res, next) {
+router.post("/add", function(req, res, next) {
+  var comicNotes;
+  if (req.body.notes === null) {
+    comicNotes = " ";
+  } else {
+    comicNotes = req.body.notes;
+  }
 
-    var comicNotes;
-    if (req.body.notes === null) {
-        comicNotes = ' ';
-    } else {
-        comicNotes = req.body.notes;
-    }
+  // Build comic Object
+  var comic = {
+    title: req.body.title,
+    issue: req.body.issueNum,
+    writer: req.body.writer,
+    artist: req.body.artist,
+    info: req.body.info,
+    year: req.body.year,
+    notes: comicNotes,
+    cover: req.body.cover,
+    uid: firebase.auth().currentUser.uid
+  };
 
-    // Build comic Object
-    var comic = {
-        title: req.body.title,
-        issue: req.body.issueNum,
-        writer: req.body.writer,
-        artist: req.body.artist,
-        info: req.body.info,
-        year: req.body.year,
-        notes: comicNotes,
-        cover: req.body.cover,
-        uid: firebase.auth().currentUser.uid
-    }
+  // Create Reference
+  var comicRef = db.ref("comics");
+  // Push comic
+  var newPostRef = comicRef.push(comic);
+  // Get the unique key generated by push()
+  var postId = newPostRef.key;
 
-    // Create Reference 
-    var comicRef = db.ref('comics');
-    // Push comic
-    var newPostRef = comicRef.push(comic);
-    // Get the unique key generated by push()
-    var postId = newPostRef.key;
-
-    // display success message and reirect to albums page
-    req.flash('success_msg', 'Comic Saved');
-    res.redirect('/comics');
+  // display success message and reirect to albums page
+  req.flash("success_msg", "Comic Saved");
+  res.redirect("/comics");
 });
 
 // get edit comic page
-router.get('/edit/:id', function(req, res, next) {
+router.get("/edit/:id", function(req, res, next) {
+  var id = req.params.id;
+  var comicEditRef = db.ref("comics");
 
-    var id = req.params.id;
-    var comicEditRef = db.ref('comics');
-        
-    comicEditRef.child(id).once('value', function(snapshot) {
+  comicEditRef.child(id).once("value", function(snapshot) {
     var comic = snapshot.val();
 
     // render album edit page
-    res.render('comics/edit', {comic:comic, id:id});
-    });
-
+    res.render("comics/edit", { comic: comic, id: id });
+  });
 });
 
 // submit edited comic page
-router.post('/edit/:id', function(req, res, next) {
+router.post("/edit/:id", function(req, res, next) {
+  var id = req.params.id;
+  var comicEditRef = db.ref("comics").child(id);
 
-    var id = req.params.id;
-    var comicEditRef = db.ref('comics').child(id);
+  // update comic
+  comicEditRef.update({
+    writer: req.body.writer,
+    artist: req.body.artist,
+    notes: req.body.notes,
+    info: req.body.info
+  });
 
-    // update comic
-    comicEditRef.update({
-        writer: req.body.writer,
-        artist: req.body.artist,
-        notes: req.body.notes,
-        info: req.body.info
-    });
-
-    req.flash('success_msg', 'Comic Updated');
-    res.redirect('/comics/details/' + id);
-
+  req.flash("success_msg", "Comic Updated");
+  res.redirect("/comics/details/" + id);
 });
 
 // delete a comic
-router.delete('/delete/:id', function(req, res, next) {
+router.delete("/delete/:id", function(req, res, next) {
+  var id = req.params.id;
 
-    var id = req.params.id;
+  var comicEditRef = db.ref("comics").child(id);
 
-    var comicEditRef = db.ref('comics').child(id);
+  comicEditRef.remove();
 
-    comicEditRef.remove();
-
-    req.flash('success_msg', 'Comic Deleted');
-    res.sendStatus(200);
-
+  req.flash("success_msg", "Comic Deleted");
+  res.sendStatus(200);
 });
 
 module.exports = router;
